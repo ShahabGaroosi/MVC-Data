@@ -1,0 +1,50 @@
+﻿@using MVC_Data.Models;
+@using MVC_Data.Models.ViewModel;
+@model Tuple<CreatePersonViewModel, PeopleViewModel>;
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<form asp-action="Create" asp-controller="Person" method="post">
+    <label asp-for="Item1.Name"></label>
+    <input asp-for="Item1.Name" />
+    <span asp-validation-for="Item1.Name"></span>
+
+    <label asp-for="Item1.MobilePhone"></label>
+    <input asp-for="Item1.MobilePhone" />
+    <span asp-validation-for="Item1.MobilePhone"></span>
+
+    <label asp-for="Item1.City"></label>
+    <input asp-for="Item1.City" />
+    <span asp-validation-for="Item1.City"></span>
+
+    <button type="submit">Create</button>
+    <button type="reset">Reset</button>
+</form>
+
+<form asp-action="Index" method="post">
+    <label asp-for="Item2.FilterText"></label>
+    <input asp-for="Item2.FilterText" />
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>MobilePhone</th>
+            <th>City</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Person person in Model.Item2.PersonList)
+        {
+            <tr>
+                <td>@person.Name</td>
+                <td>@person.MobilePhone</td>
+                <td>@person.City</td>
+            </tr>
+        }
+    </tbody>
+</table>
