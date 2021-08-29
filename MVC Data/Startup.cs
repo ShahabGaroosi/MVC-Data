@@ -54,7 +54,7 @@ namespace MVC_Data
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=People}/{action=Index}/{id?}");
+                    pattern: "{controller=People}/{action=Index}");
             });
         }
     }

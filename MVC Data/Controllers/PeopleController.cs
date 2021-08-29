@@ -22,10 +22,16 @@ namespace MVC_Data.Controllers
             _peopleService = peopleService;
             _peopleRepo = peopleRepo;
         }
+        //[HttpGet]
+        //public IActionResult Index()
+        //{
+        //    return View(_peopleService.All());
+        //}
+
         [HttpGet]
         public IActionResult Index()
         {
-            return View(_peopleService.All());
+            return View(new Tuple<CreatePersonViewModel, PeopleViewModel>(new CreatePersonViewModel(), _peopleService.All()));
         }
 
         [HttpPost]

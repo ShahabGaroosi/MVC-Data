@@ -7,7 +7,7 @@
 
 <h1>Index</h1>
 
-<form asp-action="Create" asp-controller="Person" method="post">
+<form asp-action="Index" method="post">
     <label asp-for="Item1.Name"></label>
     <input asp-for="Item1.Name" />
     <span asp-validation-for="Item1.Name"></span>
@@ -38,13 +38,16 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (Person person in Model.Item2.PersonList)
+        @if (Model.Item2.PersonList != null)
         {
-            <tr>
-                <td>@person.Name</td>
-                <td>@person.MobilePhone</td>
-                <td>@person.City</td>
-            </tr>
+            @foreach (Person person in Model.Item2.PersonList)
+            {
+                <tr>
+                    <td>@person.Name</td>
+                    <td>@person.MobilePhone</td>
+                    <td>@person.City</td>
+                </tr>
+            }
         }
-    </tbody>
+        </tbody>
 </table>
