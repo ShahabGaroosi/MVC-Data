@@ -16,6 +16,11 @@ namespace MVC_Data.Controllers
     {
         IPeopleService _peopleService;
         IPeopleRepo _peopleRepo;
+        public class CreatePersonOrPeopleViewModel
+        {
+            public CreatePersonViewModel CreatePerson { get; set; }
+            public PeopleViewModel People { get; set; }
+        }
 
         public PeopleController(IPeopleService peopleService, IPeopleRepo peopleRepo)
         {
@@ -31,20 +36,22 @@ namespace MVC_Data.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View(new Tuple<CreatePersonViewModel, PeopleViewModel>(new CreatePersonViewModel(), _peopleService.All()));
+            CreatePersonOrPeopleViewModel _createPersonOrPeopleViewModel = new CreatePersonOrPeopleViewModel();
+            _createPersonOrPeopleViewModel.People = _peopleService.All();
+            return View(_createPersonOrPeopleViewModel);
         }
 
-        [HttpPost]
-        public IActionResult Index(PeopleViewModel peopleViewModel, CreatePersonViewModel createPerson)
-        {
-            if (ModelState.IsValid)
-            {
-                _peopleService.Add(createPerson);
+        //[HttpPost]
+        //public IActionResult Index(PeopleViewModel peopleViewModel, CreatePersonViewModel createPerson)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _peopleService.Add(createPerson);
 
-                return RedirectToAction(nameof(Index));
-            }
-            return View(new Tuple<CreatePersonViewModel, PeopleViewModel>(createPerson, _peopleService.FindBy(peopleViewModel)));
-        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(new Tuple<CreatePersonViewModel, PeopleViewModel>(createPerson, _peopleService.FindBy(peopleViewModel)));
+        //}
 
         //[HttpPost]
         //public IActionResult Index(PeopleViewModel peopleViewModel)
@@ -62,6 +69,41 @@ namespace MVC_Data.Controllers
         //        return RedirectToAction(nameof(Index));
         //    }
         //    return View(new Tuple<CreatePersonViewModel, PeopleViewModel>(createPerson, new PeopleViewModel()));
+        //}
+        [HttpPost]
+        public IActionResult Index(CreatePersonOrPeopleViewModel createPersonOrPeopleViewModel)
+        {
+            createPersonOrPeopleViewModel.People = _peopleService.FindBy(createPersonOrPeopleViewModel.People);
+            return View(createPersonOrPeopleViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Create(CreatePersonOrPeopleViewModel createPersonOrPeopleViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                _peopleService.Add(createPersonOrPeopleViewModel.CreatePerson);
+
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction(nameof(Index));
+        }
+        //[HttpPost]
+        //public IActionResult Index(CreatePersonOrPeopleViewModel createPersonOrPeopleViewModel)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        if (createPersonOrPeopleViewModel.createPersonViewModel!=null)
+        //        {
+        //            _peopleService.Add(createPersonOrPeopleViewModel.createPersonViewModel);
+        //            return RedirectToAction(nameof(Index));
+        //        }
+        //        if (createPersonOrPeopleViewModel.peopleViewModel != null)
+        //        {
+        //            return View(_peopleService.FindBy(createPersonOrPeopleViewModel.peopleViewModel));
+        //        }
+        //    }
+        //    return View();
         //}
     }
 }

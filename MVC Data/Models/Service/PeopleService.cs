@@ -19,7 +19,7 @@ namespace MVC_Data.Models.Service
         {
             Person person = new Person();
 
-            if (createPerson.CheckExists(_peopleRepo, createPerson.Name, createPerson.MobilePhone, createPerson.City))
+            if (!createPerson.CheckExists(_peopleRepo, createPerson.Name, createPerson.MobilePhone, createPerson.City))
             {
                 person = _peopleRepo.Create(createPerson.Name, createPerson.MobilePhone, createPerson.City);
             }
@@ -42,15 +42,13 @@ namespace MVC_Data.Models.Service
         public PeopleViewModel FindBy(PeopleViewModel search)
         {
             PeopleViewModel peopleViewModel = new PeopleViewModel();
+            peopleViewModel.PersonList = new List<Person>();
 
             foreach (Person person in _peopleRepo.Read())
             {
-                foreach (Person searchPerson in search.PersonList)
+                if ((person.Name.Contains(search.FilterText, StringComparison.OrdinalIgnoreCase)) || (person.MobilePhone.Contains(search.FilterText, StringComparison.OrdinalIgnoreCase)) || (person.City.Contains(search.FilterText, StringComparison.OrdinalIgnoreCase)))
                 {
-                    if ((person.Name.Contains(searchPerson.Name, StringComparison.OrdinalIgnoreCase)) || (person.MobilePhone.Contains(searchPerson.MobilePhone, StringComparison.OrdinalIgnoreCase)) || (person.City.Contains(searchPerson.City, StringComparison.OrdinalIgnoreCase)))
-                    {
-                        peopleViewModel.PersonList.Add(person);
-                    }
+                    peopleViewModel.PersonList.Add(person);
                 }
             }
             return peopleViewModel;

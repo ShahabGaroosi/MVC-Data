@@ -1,6 +1,6 @@
 ﻿@using MVC_Data.Models;
 @using MVC_Data.Models.ViewModel;
-@model Tuple<CreatePersonViewModel, PeopleViewModel>;
+@model MVC_Data.Controllers.PeopleController.CreatePersonOrPeopleViewModel;
 @{
     ViewData["Title"] = "Index";
 }
@@ -8,26 +8,28 @@
 <h1>Index</h1>
 
 <form asp-action="Index" method="post">
-    <label asp-for="Item1.Name"></label>
-    <input asp-for="Item1.Name" />
-    <span asp-validation-for="Item1.Name"></span>
+    <label asp-for="People.FilterText"></label>
+    <input asp-for="People.FilterText" name="People.FilterText" />
+    <button type="submit">Filter</button>
+</form>
 
-    <label asp-for="Item1.MobilePhone"></label>
-    <input asp-for="Item1.MobilePhone" />
-    <span asp-validation-for="Item1.MobilePhone"></span>
+<form asp-action="Create" method="post">
+    <label asp-for="CreatePerson.Name"></label>
+    <input asp-for="CreatePerson.Name" />
+    <span asp-validation-for="CreatePerson.Name"></span>
 
-    <label asp-for="Item1.City"></label>
-    <input asp-for="Item1.City" />
-    <span asp-validation-for="Item1.City"></span>
+    <label asp-for="CreatePerson.MobilePhone"></label>
+    <input asp-for="CreatePerson.MobilePhone" />
+    <span asp-validation-for="CreatePerson.MobilePhone"></span>
+
+    <label asp-for="CreatePerson.City"></label>
+    <input asp-for="CreatePerson.City" />
+    <span asp-validation-for="CreatePerson.City"></span>
 
     <button type="submit">Create</button>
     <button type="reset">Reset</button>
 </form>
 
-<form asp-action="Index" method="post">
-    <label asp-for="Item2.FilterText"></label>
-    <input asp-for="Item2.FilterText" />
-</form>
 
 <table class="table">
     <thead>
@@ -38,9 +40,9 @@
         </tr>
     </thead>
     <tbody>
-        @if (Model.Item2.PersonList != null)
+        @if (Model.People.PersonList != null)
         {
-            @foreach (Person person in Model.Item2.PersonList)
+            @foreach (Person person in Model.People.PersonList)
             {
                 <tr>
                     <td>@person.Name</td>
@@ -49,5 +51,5 @@
                 </tr>
             }
         }
-        </tbody>
+    </tbody>
 </table>
