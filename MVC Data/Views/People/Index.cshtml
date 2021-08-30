@@ -37,6 +37,7 @@
             <th>Name</th>
             <th>MobilePhone</th>
             <th>City</th>
+            <th>Delete</th>
         </tr>
     </thead>
     <tbody>
@@ -48,6 +49,7 @@
                     <td>@person.Name</td>
                     <td>@person.MobilePhone</td>
                     <td>@person.City</td>
+                    <td><a asp-action="Delete" asp-route-id="@person.Id">delete</a></td>
                 </tr>
             }
         }

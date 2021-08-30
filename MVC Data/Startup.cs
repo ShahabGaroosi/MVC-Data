@@ -60,6 +60,10 @@ namespace MVC_Data
                     name: "Create",
                     pattern: "/People/Create",
                     defaults: new { controller = "People", action = "Index"});
+                endpoints.MapControllerRoute(
+                    name: "Delete",
+                    pattern: "/People/Delete",
+                    defaults: new { controller = "People", action = "Index" });
             });
         }
     }

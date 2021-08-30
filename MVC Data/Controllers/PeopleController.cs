@@ -88,6 +88,18 @@ namespace MVC_Data.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpDelete]
+        public IActionResult Delete(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                _peopleService.Remove(id);
+
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction(nameof(Index));
+        }
         //[HttpPost]
         //public IActionResult Index(CreatePersonOrPeopleViewModel createPersonOrPeopleViewModel)
         //{

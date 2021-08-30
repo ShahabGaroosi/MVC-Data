@@ -44,6 +44,10 @@ namespace MVC_Data.Models.Service
             PeopleViewModel peopleViewModel = new PeopleViewModel();
             peopleViewModel.PersonList = new List<Person>();
 
+            if (search.FilterText == null)
+            {
+                return All();
+            }
             foreach (Person person in _peopleRepo.Read())
             {
                 if ((person.Name.Contains(search.FilterText, StringComparison.OrdinalIgnoreCase)) || (person.MobilePhone.Contains(search.FilterText, StringComparison.OrdinalIgnoreCase)) || (person.City.Contains(search.FilterText, StringComparison.OrdinalIgnoreCase)))
